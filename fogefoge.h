@@ -1,3 +1,4 @@
+//ifndef -> diretiva de compilação usada para verificar se uma constante (define) não foi previamente definido
 #ifndef _FOGEFOGE_H_
 #define _FOGEFOGE_H_
 

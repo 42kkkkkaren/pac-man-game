@@ -1,11 +1,23 @@
+//Agrupamento, tudo o que relaciona mapa em um arquivo
 #include <stdio.h>
 #include <stdlib.h>
+#include "time.h"
 #include "mapa.h"
 #include <string.h>
 
+//Função pra fazer a leitura do arquivo onde está desenhado o mapa
 void lemapa(MAPA* m){
+  unsigned seed = time(0);
+	srand(seed);
+  int sorte = rand() %1;
+  
 	FILE* f;
-	f = fopen("mapa.txt", "r");
+  if(sorte==1)
+	  f = fopen("mapa.txt", "r");
+  else
+    f = fopen("mapa2.txt", "r");
+
+  
 	if(f == 0) {
 		printf("Erro na leitura do mapa");
 		exit(1);
@@ -21,6 +33,8 @@ void lemapa(MAPA* m){
 	fclose(f);
 }
 
+//Função para alocação do mapa
+//Genérica (recebimento de ponteiros), funciona pra qualquer mapa (Função reutilizável)
 void alocamapa(MAPA* m){
 	m -> matriz = malloc(sizeof(char*) * m -> linhas);
 
@@ -31,27 +45,34 @@ void alocamapa(MAPA* m){
 	}
 }
 
+//Função para gerar cópia do mapa
+//Cópia do mapa onde eu uso uma pra ler e outra pra mudar
+//Os fantasmas estarão nos mesmos lugares e não teremos problemas de colisão 
 void copiamapa(MAPA* destino, MAPA* origem){
 	destino -> linhas = origem -> linhas;
 	destino -> colunas = origem -> colunas;
 	alocamapa(destino);
 
-	for(int i = 0; i < origem -> linhas; i++) 
+  //Copia da matriz
+	for(int i = 0; i < origem -> linhas; i++){
+    //Uma string copia pra outra string (Copia até achar o /0)
 		strcpy(destino -> matriz[i], origem -> matriz[i]);
 	}
 }
 
+//Função para liberar o mapa alocado na memória
+//"free (ptr) avisa ao sistema que o bloco de bytes apontado por ptr está disponível para reciclagem"
 void liberamapa(MAPA* m){
 	for(int i = 0; i < m -> linhas; i++) {
 		free(m -> matriz[i]);
 	}
-
 	free(m -> matriz);
 }
 
+//Função genérica para busca de posição  no mapa -> Pode procurar posição de qualquer variável (heroi, fantasma)
 int encontramapa(MAPA* m, POSICAO* p, char c){
 	for(int i = 0; i < m -> linhas; i++) {
-		for(int j = 0; j < m -> colunas; j++) {
+		for(int j = 0; j < m -> colunas; j++){
 			if(m -> matriz[i][j] == c) {
 				p -> x = i;
 				p -> y = j;
@@ -59,37 +80,43 @@ int encontramapa(MAPA* m, POSICAO* p, char c){
 			}
 		}
 	}
-
 	return 0;
 }
 
+//Função para permitir andar no mapa caso não seja parede ou encontre personagem
 int podeandar(MAPA* m, char personagem, int x, int y){
 	return 
+    //Pode andar se está em posição válida, se não é parede ou o heroi
 		ehvalida(m, x, y) && 
 		!ehparede(m, x, y) &&
 		!ehpersonagem(m, personagem, x, y);
 }
 
+//Função para validar movimentação
 int ehvalida(MAPA* m, int x, int y){
-	if(x >= m -> linhas) 
-		return 0;
-	if(y >= m -> colunas) 
-		return 0;
+	//Não permite movimentar além das linhas
+  if(x >= m -> linhas) return 0;
+  //Não permite movimentar além das colunas
+	if(y >= m -> colunas) return 0;
 
 	return 1;	
 }
 
+//Função para definir o que é personagem
 int ehpersonagem(MAPA* m, char personagem, int x, int y){
 	return
 		m->matriz[x][y] == personagem;
 }
 
+//Função para definir o que é parede, de modo que o personagem não possa ultrapassá-la
 int ehparede(MAPA* m, int x, int y){
 	return 
 		m->matriz[x][y] == PAREDE_VERTICAL ||
 		m->matriz[x][y] == PAREDE_HORIZONTAL;
 }
 
+//Função para movimentação no mapa
+//Descobre o que tem na posição, manipula origem e destino
 void andanomapa(MAPA* m, int xorigem, int yorigem, 
 	int xdestino, int ydestino){
 
@@ -97,3 +124,5 @@ void andanomapa(MAPA* m, int xorigem, int yorigem,
 	m -> matriz[xdestino][ydestino] = personagem;
 	m -> matriz[xorigem][yorigem] = VAZIO;
 }
+
+//Função ehvazia -> //Função para interpretar se o local é vazio

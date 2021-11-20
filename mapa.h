@@ -1,26 +1,29 @@
 #ifndef _MAPA_H_
 #define _MAPA_H_
 
+//Definição de constantes
 #define HEROI '@'
+#define FANTASMA 'F'
+#define PILULA 'P'
 #define VAZIO '.'
 #define PAREDE_VERTICAL '|'
 #define PAREDE_HORIZONTAL '-'
-#define FANTASMA 'F'
-#define PILULA 'P'
 
-struct mapa {
+//Declaração da estrutura mapa
+struct mapa{
 	char** matriz;
 	int linhas;
 	int colunas; 
 };
 
+//Me permite usar MAPA no lugar de "struct mapa" -> Apelido pro tipo
 typedef struct mapa MAPA;
 
 void alocamapa(MAPA* m);
 void lemapa(MAPA* m);
 void liberamapa(MAPA* m);
 
-struct posicao {
+struct posicao{
 	int x;
 	int y;
 };
