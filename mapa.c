@@ -32,8 +32,7 @@ void lemapa(MAPA* m){
      printf("ERRO! Dificuldade inválida.\nPor padrão sua dificuldade foi selecinada como Medium.\n");
      f = fopen("mapaMedium.txt", "r");
   }
-	printf("\nDFICULDADE EM MAPA.C: %d\n", getDificuldade())
-;
+	
 	if(f == 0) {
 		printf("Erro na leitura do mapa");
 		exit(1);

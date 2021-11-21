@@ -3,13 +3,11 @@
 #include <string.h>
 #include "StructRanking.h"
 
-
 //Função que imprime os 10 primeiros elementos do Ranking astravés das funções primitivas 'primeiro' e 'proximo'
 void imprime(Ranking *l){
   struct player x;
   int ok;
   int cont=1;
-  
 
   printf("--------------RANKING--------------\n");
 
@@ -23,8 +21,7 @@ void imprime(Ranking *l){
     }
     printf("          %d\n",x.points);
     ok=proximo(&x, l);
-  }
- 
+  } 
   
   while(ok==1 && cont<10){
     int linha=15-strlen(x.name);

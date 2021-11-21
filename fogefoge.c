@@ -178,7 +178,7 @@ int main(){
   scanf("%d",&d); //Recebe a dificuldade escolhida
   setDificuldade(d);
   p.points=0; //Player começa o game com 0 pontos
-  printf("DIFICULDADE: %d     d: %d",getDificuldade(),d);
+  
 
 	lemapa(&m);
 	encontramapa(&m, &heroi, HEROI);
