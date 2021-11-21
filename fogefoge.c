@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_DEPRECATE
 #include <stdio.h>
 #include <stdlib.h>
 #include "time.h"
@@ -92,7 +93,8 @@ int praondefantasmavai(int xatual, int yatual,
 	};
 
   //Definição de lugar randomico
-	srand(time(0));
+	unsigned seed = time(0);
+	srand(seed);
 	for(int i = 0; i < 10; i++){
 		int posicao = rand() % 4;
 

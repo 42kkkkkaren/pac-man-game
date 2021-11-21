@@ -1,4 +1,5 @@
 //Agrupamento, tudo o que relaciona mapa em um arquivo
+#define _CRT_SECURE_NO_DEPRECATE
 #include <stdio.h>
 #include <stdlib.h>
 #include "time.h"
