@@ -241,6 +241,6 @@ int main(){
 
 	liberamapa(&m); //Libera memória para m (tipo MAPA)
 
-  return 0; //Fim do programa
   system("pause");
+  return 0; //Fim do programa
 }
