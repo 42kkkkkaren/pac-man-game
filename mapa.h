@@ -19,6 +19,11 @@ struct mapa{
 //Me permite usar MAPA no lugar de "struct mapa" -> Apelido pro tipo
 typedef struct mapa MAPA;
 
+//Variável e funções para manipulação da dificuldade do jogo
+int dificuldade;
+int getDificuldade();
+void setDificuldade(int d);
+
 void alocamapa(MAPA* m);
 void lemapa(MAPA* m);
 void liberamapa(MAPA* m);

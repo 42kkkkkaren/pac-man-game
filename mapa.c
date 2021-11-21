@@ -5,19 +5,35 @@
 #include "mapa.h"
 #include <string.h>
 
+//Funções para manipulação da dificuldade
+void setDificuldade(int d){
+  dificuldade = d;
+}
+
+int getDificuldade(){
+  return dificuldade;
+}
+
 //Função pra fazer a leitura do arquivo onde está desenhado o mapa
 void lemapa(MAPA* m){
-  unsigned seed = time(0);
-	srand(seed);
-  int sorte = rand() %1;
   
 	FILE* f;
-  if(sorte==1)
-	  f = fopen("mapa.txt", "r");
-  else
-    f = fopen("mapa2.txt", "r");
-
-  
+  switch(dificuldade){
+    case 1:
+      f = fopen("mapaEasy.txt", "r");
+      break;
+    case 2:
+      f = fopen("mapaMedium.txt", "r");
+      break;
+    case 3:
+     f = fopen("mapaHard.txt", "r");
+      break;
+    default:
+     printf("ERRO! Dificuldade inválida.\nPor padrão sua dificuldade foi selecinada como Medium.\n");
+     f = fopen("mapaMedium.txt", "r");
+  }
+	printf("\nDFICULDADE EM MAPA.C: %d\n", getDificuldade())
+;
 	if(f == 0) {
 		printf("Erro na leitura do mapa");
 		exit(1);
@@ -124,5 +140,3 @@ void andanomapa(MAPA* m, int xorigem, int yorigem,
 	m -> matriz[xdestino][ydestino] = personagem;
 	m -> matriz[xorigem][yorigem] = VAZIO;
 }
-
-//Função ehvazia -> //Função para interpretar se o local é vazio

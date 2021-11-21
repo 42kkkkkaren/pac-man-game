@@ -162,9 +162,6 @@ void explodepilula(){
 
 
 int main(){
-	lemapa(&m);
-	encontramapa(&m, &heroi, HEROI);
-
   FILE *rank;
   rank = fopen("ranking.txt","a");
 
@@ -173,10 +170,19 @@ int main(){
   cria(r);
   struct player p; //Struct que armazena nome e pontuação do jogador
   
-   printf("-------------------FOGE-FOGE--------------------\n\n");
+  printf("-------------------FOGE-FOGE--------------------\n\n");
   printf("Player: ");
-  scanf("%s",p.name);
-  p.points=0;
+  scanf("%s",p.name); //Recebe o nome do player
+  printf("\nEscolha a dficuldade:\n1(EASY)    2(MEDIUM)    3(HARD)\n");
+  int d;
+  scanf("%d",&d); //Recebe a dificuldade escolhida
+  setDificuldade(d);
+  p.points=0; //Player começa o game com 0 pontos
+  printf("DIFICULDADE: %d     d: %d",getDificuldade(),d);
+
+	lemapa(&m);
+	encontramapa(&m, &heroi, HEROI);
+
 
 	do{
 		printf("Pílula: %s\n", (tempilula ? "SIM" : "NÃO"));
@@ -190,7 +196,20 @@ int main(){
 
 		fantasmas();
 
-    p.points += 100; //A cada movimento o jogador soma 100 pontos
+    //A cada movimento o jogador soma pontos de acordo com a dificuldade
+    switch(getDificuldade()){
+      case 1:
+        p.points += 10; //Easy - 10pts
+        break;
+      case 2:
+        p.points += 50; //Medium - 50 pts
+        break;
+      case 3:
+        p.points += 100; //Hard - 100pts
+        break;
+      default:
+        p.points += 50; //Por padrão o jogo segue no lvl Medium
+      }
 
     
 	}while (!acabou());
@@ -214,11 +233,11 @@ int main(){
       insere(p,r);
     }
   }
-  fclose(rank);
-  imprime(r);
-  free(r);
+  fclose(rank); //Fecha o arquivo que armazena Ranking
+  imprime(r); // Imprime o ranking (10 primeiros)
+  free(r); //Libera memória alocada para r (tipo Ranking)
 
-	liberamapa(&m);
+	liberamapa(&m); //Libera memória para m (tipo MAPA)
 
-  return 0;
+  return 0; //Fim do programa
 }

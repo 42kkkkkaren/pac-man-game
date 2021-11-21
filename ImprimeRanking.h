@@ -30,12 +30,16 @@ void imprime(Ranking *l){
     int linha=15-strlen(x.name);
     cont++;
     printf("%d. %s",cont,x.name);
-    for(int i=1; i<=linha; i++){
-      printf(".");
+    if(cont==10){
+      for(int j=1; j<linha; j++)
+        printf(".");
+    }else{
+      for(int i=1; i<=linha; i++){
+        printf(".");
+      }
     }
     printf("          %d\n",x.points);
     ok=proximo(&x, l);
   }
   printf("\n");
-
 }
